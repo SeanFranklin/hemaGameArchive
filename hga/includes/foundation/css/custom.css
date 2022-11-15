@@ -1,0 +1,375 @@
+/* Added By Sean **************************************************************/
+
+.monospace{
+  font-family: "Courier New";
+}
+
+/* Tag Inputs ***********************************************************************************/
+
+.tag-input-container {
+  position: relative;
+}
+
+.tag-input-container input,
+.tag-input-container .tag-suggestions {
+  background: #fff;
+}
+
+.tag-input-container .tag-suggestions {
+  position: absolute;
+  top: 30px;
+  backgroud:  white;
+}
+
+.tag-suggestions ul {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.tag-suggestions ul li {
+  padding: 10px 30px 10px 30px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.tag-suggestions ul li:hover {
+  background:#64C6FF;
+}
+
+/* From Scorecard ***********************************************************************************/
+
+.shrink-column{
+  width:0.1%;
+  white-space: nowrap;
+}
+
+.link-table:hover{
+  background:#64C6FF;
+}
+
+.link-table{
+   cursor: pointer;
+}
+
+.link-table-active{
+   color:red;
+}
+
+.strike-through{
+  text-decoration: line-through;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.no-wrap{
+  white-space: nowrap;
+}
+
+.no-mouse{
+  pointer-events: none;
+}
+
+.table-top-border{
+  border-top: 1px solid black;
+}
+
+.accordion-title {
+	padding-top:10px; 
+	padding-bottom:1px;
+}
+
+.hidden{
+	display: none;
+}
+
+.hidden-important{
+  display: none !important;
+}
+
+select {
+	margin-bottom: 0px;
+}
+
+.black-border {
+	border:solid 1px black;
+}
+
+.bottom-border {
+	border-bottom:solid 1px black;
+}
+
+.no-margin {
+	margin: 0px;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.no-bottom {
+	margin-bottom: 0px;
+}
+
+.no-top {
+  margin-top: 0px;
+}
+
+.pointer {
+  cursor:pointer;
+}
+
+.grab {
+  cursor:grab;
+}
+
+.red-text {
+  color: red;
+}
+
+.white-text {
+  color: white;
+}
+
+.grey-text {
+  color: grey;
+}
+
+.black-text {
+  color: black;
+}
+
+.alert-text {
+  color: #F04124;
+}
+
+.blue-text {
+  color: #1779ba;
+}
+
+.success-text {
+  color: #43AC6A;
+}
+
+.warning-text {
+  color: #F08A24;
+}
+
+/* Jayson Stuff ***************************************************************/
+
+.top-bar, .top-bar ul {
+  background-color:#1E0000; /*black*/
+  color:white;
+}
+
+.title-bar-title {
+  Color:white;
+}
+
+a, a:visited {
+  color:#2D9CDB;
+}
+
+/**#page-wrapper {
+  margin-top:1rem;
+}**/
+
+/**Match Styling **/
+
+.match-item {
+  display:block;
+  border-style:solid;
+  border-width:1px;
+  border-color:#DDDDDD;
+  margin-bottom:1rem;
+}
+
+/**.match-item:hover {
+  border-color:#2D9CDB;
+}**/
+
+.match-item a, .match-item a:visited {
+  font-size:.875rem;
+  font-weight:Bold;
+  display:inline-block;
+  width:100%;
+  text-align:center;
+height:1.5rem;
+line-height:1.6rem;
+margin-bottom:.25rem;
+}
+
+.match-item a:hover {
+  background-color:#2D9CDB;
+  color:white;
+}
+
+.current-match a, current-match a:visited {
+background-color:black;
+color:white;
+}
+
+.current-match {
+border-color:black;
+}
+
+.match-item ul {
+  margin:0;
+}
+
+.match-item li {
+  display:block;
+  list-style: none;
+  float:left;
+  width:47%;
+  text-align:center;
+  border-bottom:4px solid;
+  padding-bottom:.5rem;
+  height:100%;
+}
+
+li.versus-item {
+  width:6%;
+  border-bottom:none;
+  font-size:.75rem;
+  color:grey;
+  height:100%;
+  display:inline-block;
+}
+
+
+.match-item li:last-child {
+  float:right;
+}
+
+li h5, li h6 {
+  font-size:.75rem;
+  margin:0;
+}
+
+li h5 {
+  font-weight: bold;
+}
+
+.lost {
+  opacity:.4;
+  text-decoration:line-through;
+}
+
+.hero-title {
+  background-color: #FFF7F7;/*#F2F2F2;*/
+  padding:1rem;
+  text-align:center;
+}
+
+.hero-title h1, .hero-title h2 {
+    width:100%;
+  font-weight:bold;
+}
+
+h1 {
+  font-size:1.25rem;
+  margin:0;
+}
+
+h2 {
+  font-size:1rem;
+}
+
+.tourney-menu-large {
+  border-bottom:1px solid #2D9CDB;
+  margin-bottom:1rem;
+  font-size:1rem;
+}
+
+.tourney-menu-large li {
+  border-bottom:4px solid white;
+}
+
+.tourney-menu-large li.is-active a {
+  Background-color:white;
+  color:black;
+}
+
+
+.tourney-menu-large li.is-active {
+
+  border-bottom-color:#2D9CDB;
+}
+
+.dropdown .is-current a {
+  color:black;
+  font-weight:bold;
+}
+
+.tourney-menu-mobile {
+   border-bottom:1px solid #2D9CDB;
+     margin-bottom:1.5rem;
+  font-size:1rem;
+
+}
+
+.title-bar {
+  display:block;
+}
+
+.title-bar .login-link {
+  display:inline-block;
+  float:right;
+  color:white;
+  margin: 0 .5rem;
+}
+
+label {
+  margin-bottom:.5rem;
+}
+
+label span {
+  display:inline-block;
+  font-weight:bold;
+  padding-bottom:.365rem;
+}
+
+.login-button {
+  font-weight:bold;
+}
+
+.pool-switcher {
+  margin-bottom:1rem;
+}
+
+.fencer {
+  width:50%;
+  padding:2rem 1rem;
+  text-align: center;
+  color:white;
+}
+
+.fencer h4, .fencer h5, .fencer h6 {
+  margin-bottom:0;
+}
+
+.fencer h1 {
+  font-size:8rem;
+  font-weight:bold;
+}
+
+@media (max-width: 480px) {
+.fencer h1 {
+  font-size:4rem;
+}
+
+}
+
+.red {
+background-color:#EB5757;
+}
+
+.blue {
+  background-color:#1C6CD8;
+}
