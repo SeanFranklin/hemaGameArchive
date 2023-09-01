@@ -11,8 +11,11 @@ suggestions.addEventListener('mouseup', useSuggestion);
 function tagTest(){
 
     var text = $("#tag-input").val();
+    text = text.toLowerCase();
+    $("#tag-input").val(text);
     var allTags = text.split(' ');
     var lastWord = allTags.pop();
+
 
     if(lastWord.length == 0){
         suggestions.innerHTML = '';
@@ -29,8 +32,6 @@ function tagTest(){
         htmlList = '<li>'+tagsFromList.join('</li><li>')+'</li>';
         suggestions.innerHTML = htmlList;
     }
-
-    //var a = document.getElementById('game-table-tag-list-7');
 
     var listOfCells = document.getElementsByClassName("game-list-of-tags");
     var allTagIDs = [];

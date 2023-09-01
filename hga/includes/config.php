@@ -12,6 +12,10 @@
 
 // Initialize Session //////////////////////////////////////////////////////////
 
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
+
 	initializeSession();
 
 // System Constants ////////////////////////////////////////////////////////////
@@ -24,6 +28,7 @@
 		define('BASE_URL' , $_SERVER['DOCUMENT_ROOT'].'/hga/');
 	}
 	include(BASE_URL.'includes/database.php');
+
 
 // Program Related Constants
 
@@ -60,6 +65,7 @@
 	define("INFO_META_RULES",1);
 	define("INFO_META_DESIGN",2);
 	define("INFO_META_NOTES",3);
+	define("INFO_META_MEDIA",4);
 
 // Includes ////////////////////////////////////////////////////////////////////
 
@@ -84,12 +90,11 @@ $conn = connectToDB();
 	$sql = "SELECT tagMetaID, tagColor
 			FROM tagMeta";
 	$colorList = mysqlQuery($sql, ASSOC);
+
 	echo "<style>";	
 		foreach($colorList as $c){
-		?>
-		.tag-color-<?=$c['tagMetaID']?> { color: <?=$c['tagColor']?>;}
-		<?
-	}
+			echo ".tag-color-{$c['tagMetaID']} { color: {$c['tagColor']} }";
+		}
 
 	echo "</style>";
 
