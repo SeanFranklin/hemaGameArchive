@@ -31,11 +31,18 @@ include('includes/header.php');
 			<input type='hidden' name='formName' value='logOut'>
 			<a onclick="$('#page-log-out-form').submit()">Log Out</a>	
 		</form>
+
 		<HR>
+
+		<?=newsfeed()?>
+
+		<HR>
+
 		<?=changePasswordList()?>
+		<?=addNewUserInput()?>
 	<?php endif ?>
 
-<?
+<?php
 include('includes/footer.php');
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
@@ -73,7 +80,7 @@ function logInForm(){
 	</div>
 	</div>
 
-<?
+<?php
 }
 
 /******************************************************************************/
@@ -152,7 +159,7 @@ function changePasswordForm($userInfo){
 
 
 
-<?
+<?php
 }
 
 /******************************************************************************/
@@ -161,17 +168,34 @@ function changePasswordList(){
 
 	if(ALLOW['ADMIN'] == true){
 		$userList = getUserList();
+		$class = "hidden";
 	} else {
 		$userList[0] = getUserInfo($_SESSION['userID']);
+		$class = "";
 	}
-?>
-	<div class='grid-x grid-margin-x'>
 
+?>
+
+	<HR class="<?=$class?> manage-users">
+
+	<div class='grid-x grid-margin-x'>
 	<div class='large-7 cell'>
-	<table>
+
+	<?php if(ALLOW['ADMIN'] == true):?>
+		<h3><a onclick="$('.manage-users').toggleClass('hidden')">Manage Users</a></h3>
+	<?php endif ?>
+
+	<table class="<?=$class?> manage-users">
+
+		<?php if(ALLOW['ADMIN'] == true):?>
+		<tr>
+			<td class='text-right' colspan="100%">
+				hasPassword | CAN_ADD | CAN_EDIT | CAN_ADMIN
+			</td>
+		</tr>	
+		<?php endif ?>
 
 	<?php foreach($userList as $u):
-
 
 		?>
 		<tr>
@@ -202,43 +226,66 @@ function changePasswordList(){
 	<?php endforeach ?>
 
 	</table>
-	
-	<?php if(ALLOW['ADMIN'] == true): ?>
 
-		<HR>
-		<h3>Add New User</h3>
+	<HR class="<?=$class?> manage-users">
 
-		<form method="POST">
-		<table>
-		
-			<tr>
-				<td>userAccount</td>
-				<td><input class='text' name='addNewUser[userAccount]' required></td>
-			</tr><tr>
-				<td>userName</td>
-				<td><input class='text' name='addNewUser[userName]' required></td>
-			</tr><tr>
-				<td>ADD</td>
-				<td><?=checkboxPaddle('addNewUser[CAN_ADD]',1,false,0)?></td>
-			</tr><tr>
-				<td>EDIT</td>
-				<td><?=checkboxPaddle('addNewUser[CAN_EDIT]',1,false,0)?></td>
-			</tr><tr>
-				<td>ADMIN</td>
-				<td><?=checkboxPaddle('addNewUser[CAN_ADMIN]',1,false,0)?></td>
-			</tr>		
-		</table>
-
-		<button class='button success no-bottom' name='formName' value='addNewUser'>
-			Create New User
-		</button>
-		
-		</form>
-	
-	<?php endif ?>
+	</div>
 	</div>
 
-<?
+<?php
+}
+
+/******************************************************************************/
+
+function addNewUserInput(){
+
+	if(ALLOW['ADMIN'] == false){
+		return;
+	}
+
+?>
+
+	<div class='grid-x grid-margin-x'>
+	<div class='large-7 cell'>
+
+	<HR class="hidden add-user">
+
+	<h3><a onclick="$('.add-user').toggleClass('hidden')">Add New User</a></h3>
+
+	<form method="POST" class="hidden add-user">
+	<table  >
+	
+		<tr>
+			<td>userAccount</td>
+			<td><input class='text' name='addNewUser[userAccount]' required></td>
+		</tr><tr>
+			<td>userName</td>
+			<td><input class='text' name='addNewUser[userName]' required></td>
+		</tr><tr>
+			<td>ADD</td>
+			<td><?=checkboxPaddle('addNewUser[CAN_ADD]',1,false,0)?></td>
+		</tr><tr>
+			<td>EDIT</td>
+			<td><?=checkboxPaddle('addNewUser[CAN_EDIT]',1,false,0)?></td>
+		</tr><tr>
+			<td>ADMIN</td>
+			<td><?=checkboxPaddle('addNewUser[CAN_ADMIN]',1,false,0)?></td>
+		</tr>		
+	</table>
+
+	<button class='button success no-bottom' name='formName' value='addNewUser'>
+		Create New User
+	</button>
+	
+	</form>
+
+	<HR class="hidden add-user">
+	
+	
+	</div>
+	</div>
+
+<?php
 }
 
 

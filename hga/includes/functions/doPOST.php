@@ -14,12 +14,12 @@ function processPostData(){
 
 	///////////////////////////////////////////////////////////////////////
 	/* For debugging, commented out for regular use ///
-	//if(ALLOW['ADMIN'] == true){
+	if(ALLOW['ADMIN'] == true){
 		$refreshPage = false;
 		define('SHOW_POST', true);
 		define('SHOW_URL_NAV', false);
 		$_SESSION['post'] = $_POST;
-	//}
+	}
 	//define('SHOW_SESSION', true);
 	//////////////////////////////////////////////////////////////////////*/
 
@@ -52,6 +52,9 @@ function processPostData(){
 			case 'editGameInfo':
 				$i = $_POST['editGameInfo'];
 				editGameInfo($i['infoID'], $i['infoText'], $i['infoMetaID']);
+				break;
+			case 'deleteGameInfo':
+				deleteGameInfo($_POST['deleteGameInfo']);
 				break;
 			case 'addTags':
 				addTagsToGame($_POST['addTags']);

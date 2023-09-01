@@ -6,8 +6,8 @@
 
 include_once('includes/config.php');
 
-$vJ = '?=0.0.1'; // Javascript Version
-$vC = '?=0.0.2'; // CSS Version
+$vJ = '?=0.0.3'; // Javascript Version
+$vC = '?=0.0.3'; // CSS Version
 ?>
 
 <!doctype html>
@@ -29,7 +29,7 @@ $vC = '?=0.0.2'; // CSS Version
 		HEMA Games Archive
 	">
 	<meta name="keywords" content="stuff">
-    <title>HEMA Game Archive</title>
+    <title><?=addGameToTitle(@$showGameNameInTitle)?>HEMA Game Archive</title>
     
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -127,6 +127,7 @@ $vC = '?=0.0.2'; // CSS Version
 function navigationList(){
 ?>
 	<li><a href='gameList.php'>Game List</a></li>
+	<li><a href='gameNew.php'>Newly Added</a></li>
 
 	<?php if(ALLOW['ADD'] == true):?>
 		<li><a href='gameAdd.php'>Add Game</a></li>
@@ -136,8 +137,14 @@ function navigationList(){
 		<li><a href='tagList.php'>Edit Tags</a></li>
 	<?php endif ?>
 
-	<li><a href='infoAbout.php'>Help/About</a></li>
-<?
+	<?php if(ALLOW['ADMIN'] == true):?>
+		<li><a href='adminLogIn.php'>ADMIN</a></li>
+	<?php endif ?>
+
+	<li><a href='infoAbout.php'>About</a></li>
+	<li><a href='https://www.gd4h.org/'>GD4H Articles</a></li>
+
+<?php
 }
 
 /******************************************************************************/
@@ -165,6 +172,16 @@ function debugging(){
 		show($_SESSION);
 	}
 	
+}
+
+/******************************************************************************/
+
+function addGameToTitle($show){
+
+	if($show == true && $_SESSION['gameID'] != 0){
+		echo getGameName($_SESSION['gameID']);
+		echo " - ";
+	}
 }
 
 /******************************************************************************/

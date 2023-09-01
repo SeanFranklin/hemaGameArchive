@@ -92,7 +92,7 @@ function changeTagMeta($tagInfo, $tagMetaTypes, $name, $class=''){
 		<?php endforeach ?>
 	</select>
 
-<?
+<?php
 }
 
 /******************************************************************************/
@@ -148,7 +148,7 @@ function askForTagMeta(){
 
 	</div>
 
-<?
+<?php
 
 }
 
@@ -172,7 +172,7 @@ function tagListInput($inputName){
 		</div>
 	</div>
 
-<? }
+<?php }
 
 /******************************************************************************/
 
@@ -257,7 +257,7 @@ function infoMetaDescriptionBox($infoMetaTypes){
 			<span aria-hidden='true'>&times;</span>
 		</button>
 	</div>
-<?
+<?php
 }
 
 /******************************************************************************/
@@ -278,6 +278,38 @@ function infoMetaCalloutColorClass($infoMetaID){
 }
 
 /******************************************************************************/
+
+function newsfeed($numInFeed = 10){
+
+	$recent = getNewsfeedInfo($numInFeed);
+
+?>
+	<div class='grid-x grid-margin-x'>
+
+	<div class='callout large-7 cell warning'>
+		<h4>Latest Games:</h4>
+		<?php foreach($recent['games'] as $game):?>
+			<li><b><a href="gameInfo.php?g=<?=$game['gameID']?>"><?=$game['gameName']?></a></b> 
+				by <i><?=getUserName($game['userID'])?></i> 
+				on <?=$game['gameDatestamp']?></li>
+		<?php endforeach ?>
+	</div>
+
+	<div class='callout large-5 cell primary'>
+		<h4>Information Updates/Comments:</h4>
+		<?php foreach($recent['info'] as $game):?>
+			<li><b><a href="gameInfo.php?g=<?=$game['gameID']?>"><?=$game['gameName']?></a></b> 
+				by <i><?=getUserName($game['userID'])?></i> 
+				on <?=$game['infoDate']?></li>
+		<?php endforeach ?>
+	</div>
+
+
+	</div>
+
+
+<?php
+}
 
 
 /******************************************************************************/

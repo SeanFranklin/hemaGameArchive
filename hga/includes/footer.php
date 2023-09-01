@@ -13,7 +13,15 @@
 	</div id='a'><!-- End Page Wrapper -->
 
 <!-- Footer content -->
-	
+	<div class='reveal tiny text-center' id='you-suck' data-reveal>
+
+		<img src="includes/images/suck.png">
+
+		<!-- Reveal close button -->
+		<button class='close-button' data-close aria-label='Close modal' type='button'>
+			<span aria-hidden='true'>&times;</span>
+		</button>
+	</div>
 
 	<div class='grid-x grid-margin-x text-right align-right'  style='border-top: 1px solid black; margin-top: 20px;'>
 
@@ -22,11 +30,13 @@
 			<div class='shrink cell'>
 				<div class='grid-x grid-margin-x align-right'>
 					<div class='shrink cell'>
-						<a href='index.php'>HEMA Game Archive</a><BR>
+						<b>HEMA Game Archive</b><BR>
 						Developed by Sean Franklin <BR>
+						<a href='https://www.gd4h.org/'>GD4H project</a>
+						
 					</div>
 					<div class='shrink cell'>
-							<img src='includes/images/HGA_logo.png'>
+							<img src='includes/images/HGA_logo.png' data-open="you-suck">
 					</div>
 				</div>
 			</div>

@@ -15,16 +15,19 @@ $pageName = "About";
 
 include('includes/header.php');
 
+	$stats = getArchiveStats();
+
+
 // PAGE DISPLAY ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ?>
 
-<div class='grid-x grid-margin-x'>
-	<div class='cell'>
-		<h3>Welcome to the HEMA Games Archive</h3>
-	</div>
+	<div class='grid-x grid-margin-x'>
+		<div class='cell'>
+			<h3>Welcome to the HEMA Games Archive</h3>
+		</div>
 
-	
+		
 		<div class='cell shrink'>
 			<img src='includes/images/GameOrDrill.png' size='100px'>
 		</div>
@@ -42,19 +45,41 @@ include('includes/header.php');
 
 		</div>
 
+		
+
+		<div class='cell large-12' >
+			<?=newsfeed()?>
+		</div>
+
+
+
+		<div class='cell callout large-3 medium-6'>
+			# of games: <?=$stats['numGames']?>
+		</div>
+		
+		<div class='cell callout large-3 medium-6'>
+			# of game contributors: <?=$stats['numAuthors']?>
+		</div>
+		
+		<div class='cell callout large-3 medium-6'>
+			# of unique tags: <?=$stats['numTagTypes']?>
+		</div>
+		
+		<div class='cell callout large-3 medium-6'>
+			# of tags attached: <?=$stats['numTagsAttached']?>
+		</div>
+
+
+	</div>
+
 	
-
-
-
-</div>
-
-	
-<?
+<?php
 include('includes/footer.php');
+
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
+/******************************************************************************/
 
 /******************************************************************************/
 

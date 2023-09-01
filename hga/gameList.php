@@ -28,23 +28,27 @@ include('includes/header.php');
 
 	<div class='grid-x grid-margin-x'>
 
-	<div class='cell large-7'>
+	<div class='cell large-4 hide-for-large'>
+		<?=displayTagList($tagList)?>
+	</div>
+
+	<div class='cell large-8'>
 		<b>Tags:</b>
 		<?=tagListInput("a")?>
 	
 
-	<table>
-		<tr>
-			<th>Game</th>
-			<th>Tags</th>
-		</tr>
+	<table class='stack'>
 
 	<?php foreach($gameList as $g): ?>
 		<tr id='game-table-row-<?=$g['gameID']?>'>
 			<td class='no-wrap'>
 				<a href='gameInfo.php?g=<?=$g['gameID']?>'>
 					<?=$g['gameName']?>
+					<?php if(ALLOW['ADD'] == true): ?>
+						<BR><i>(<?=getUserName($g['userID'])?>)</i>
+					<?php endif ?>
 				</a>
+
 			</td>
 			<td class='monospace'>
 				<?php foreach($g['tags'] as $tag):?>
@@ -56,16 +60,17 @@ include('includes/header.php');
 	<?php endforeach ?>
 
 	</table>
+
 	</div>
 
-	<div class='cell large-4'>
+	<div class='cell large-3 show-for-large'>
 		<?=displayTagList($tagList)?>
 	</div>
 
 
 	</div>
 
-<?
+<?php
 include('includes/footer.php');
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
@@ -97,7 +102,7 @@ function displayTagList($tagList){
 			</h5>
 			<div style='display:none' class='metaID-<?=$currentMetaID?>'>
 			<ul>
-			<?
+			<?php
 		}
 
 		?>
@@ -111,7 +116,7 @@ function displayTagList($tagList){
 	<?php endforeach ?>
 	</ul>
 	</div>
-<?
+<?php
 }
 
 /******************************************************************************/
