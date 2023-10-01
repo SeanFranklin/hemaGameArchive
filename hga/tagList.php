@@ -65,7 +65,7 @@ if(hasPermisionForPage('EDIT') == true){
 	</div>
 	</div>
 
-<? }
+<?php }
 include('includes/footer.php');
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////

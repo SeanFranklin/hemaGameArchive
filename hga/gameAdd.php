@@ -71,7 +71,7 @@ if(hasPermisionForPage("ADD") == true){
 	</form>
 	
 
-<? }
+<?php }
 include('includes/footer.php');
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
