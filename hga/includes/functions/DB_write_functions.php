@@ -67,7 +67,7 @@ function editGame($gameData){
 		return;
 	}
 
-	$gameID = $gameData['gameID']; 
+	$gameID = (int)$gameData['gameID']; 
 	$gameName = $gameData['gameName']; ////TODO: check if name is valid (not too short)
 	$gameRules = $gameData['gameRules']; ////TODO: check if rules are valid (not too short)
 
@@ -90,7 +90,8 @@ function addGameInfo($gameID, $infoText, $infoMetaID){
 	if(ALLOW['ADD'] == false){
 		return;
 	}
-	
+
+
 	$gameID = (int)$gameID;
 	$userID = (int)$_SESSION['userID'];
 	$infoMetaID = (int)$infoMetaID;
@@ -106,6 +107,7 @@ function addGameInfo($gameID, $infoText, $infoMetaID){
 	$bind = mysqli_stmt_bind_param($stmt, "s", $infoText);
 	$exec = mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
+
 
 }
 
@@ -129,6 +131,21 @@ function editGameInfo($infoID, $infoText, $infoMetaID){
 	$bind = mysqli_stmt_bind_param($stmt, "s", $infoText);
 	$exec = mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
+
+}
+
+/******************************************************************************/
+
+function deleteGameInfo($deleteGameInfo){
+
+	if(ALLOW['ADMIN'] == false){
+		return;
+	}
+
+	$infoID = $deleteGameInfo['infoID'];
+	$sql = "DELETE FROM infoList
+			WHERE infoID = {$infoID}";
+	mysqlQuery($sql, SEND);
 
 }
 

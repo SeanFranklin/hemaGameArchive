@@ -1,11 +1,11 @@
 <?php
 /*******************************************************************************
 	doPOST
-	
+
 	Landing platform for POST form submissions.
-	Every form submision contains a 'formName' which directs the 
+	Every form submision contains a 'formName' which directs the
 	appropriate action to handle POST data.
-	
+
 *******************************************************************************/
 
 /******************************************************************************/
@@ -14,12 +14,12 @@ function processPostData(){
 
 	///////////////////////////////////////////////////////////////////////
 	/* For debugging, commented out for regular use ///
-	//if(ALLOW['ADMIN'] == true){
+	if(ALLOW['ADMIN'] == true){
 		$refreshPage = false;
 		define('SHOW_POST', true);
 		define('SHOW_URL_NAV', false);
 		$_SESSION['post'] = $_POST;
-	//}
+	}
 	//define('SHOW_SESSION', true);
 	//////////////////////////////////////////////////////////////////////*/
 
@@ -30,7 +30,7 @@ function processPostData(){
 		if(!isset($refreshPage)){
 			$refreshPage = true;
 		}
-	
+
 		$formName = $_POST['formName'];
 
 		switch($formName){
@@ -52,6 +52,9 @@ function processPostData(){
 			case 'editGameInfo':
 				$i = $_POST['editGameInfo'];
 				editGameInfo($i['infoID'], $i['infoText'], $i['infoMetaID']);
+				break;
+			case 'deleteGameInfo':
+				deleteGameInfo($_POST['deleteGameInfo']);
 				break;
 			case 'addTags':
 				addTagsToGame($_POST['addTags']);
@@ -99,7 +102,7 @@ function processPostData(){
 	if(empty($refreshPage) == false || isset($_SESSION['refreshPage']) == true){
 		refreshPage();
 	}
-	
+
 }
 
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
@@ -118,6 +121,21 @@ function processUrlParams(){
 	if(isset($urlParams['g']) == true){
 		$gameID = (int)$urlParams['g'];
 	}
+
+
+// Process tags param
+	$_SESSION['urlTagList'] = [];
+
+	for($i = 0; $i <= 20; $i++){
+
+		if(isset($urlParams['t'.$i]) == true){
+			$tagID = (int)getTagID($urlParams['t'.$i]);
+			if($tagID != 0){
+				$_SESSION['urlTagList'][$tagID] = $urlParams['t'.$i];
+			}
+		}
+	}
+
 
 // Check that the gameID from the URL is a valid game ID
 	$sql = "SELECT gameID
@@ -168,7 +186,7 @@ function logUserIn($input){
 /******************************************************************************/
 
 function logUserOut(){
-	
+
 	$_SESSION['userID'] = 0;
 }
 

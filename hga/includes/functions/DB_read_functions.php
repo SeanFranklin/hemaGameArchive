@@ -1,9 +1,9 @@
 <?php
 /*******************************************************************************
 	Database Read Functions
-	
+
 	Functions for reading from the HEMA Scorecard database
-	
+
 *******************************************************************************/
 
 /******************************************************************************/
@@ -20,7 +20,7 @@ function getGameName($gameID){
 			FROM gameList
 			WHERE gameID = {$gameID}";
 
-	return (mysqlQuery($sql, SINGLE, 'gameID'));
+	return (mysqlQuery($sql, SINGLE, 'gameName'));
 }
 
 /******************************************************************************/
@@ -35,9 +35,19 @@ function getGameList(){
 
 /******************************************************************************/
 
-function getGameListAndTags(){
+function getGameNameList(){
 
 	$sql = "SELECT gameID, gameName
+			FROM gameList";
+	return ((array)mysqlQuery($sql, KEY_SINGLES, 'gameID', 'gameName'));
+
+}
+
+/******************************************************************************/
+
+function getGameListAndTags(){
+
+	$sql = "SELECT gameID, gameName, userID
 			FROM gameList
 			ORDER BY gameName ASC";
 	$allGames = (array)mysqlQuery($sql, ASSOC, 'gameID', 'gameName');
@@ -45,9 +55,10 @@ function getGameListAndTags(){
 	foreach($allGames as $game){
 		$gameList[$game['gameID']]['gameID'] = $game['gameID'];
 		$gameList[$game['gameID']]['gameName'] = $game['gameName'];
+		$gameList[$game['gameID']]['userID'] = $game['userID'];
 		$gameList[$game['gameID']]['tags'] = [];
 	}
-	
+
 	$sql = "SELECT gameID, tagID, tagName, tagMetaID
 			FROM gameTag
 			INNER JOIN tagList USING(tagID)
@@ -60,7 +71,7 @@ function getGameListAndTags(){
 	}
 
 	return ($gameList);
-	
+
 
 }
 
@@ -88,8 +99,16 @@ function getGameInfo($gameID){
 	$infoItems = (array)mysqlQuery($sql, ASSOC);
 
 	$gameInfo['info'] = [];
+	$gameInfo['media'] = [];
+
 	foreach($infoItems as $i){
-		$gameInfo['info'][$i['infoID']] = $i;
+
+		if($i['infoMetaID'] != INFO_META_MEDIA){
+			$gameInfo['info'][$i['infoID']] = $i;
+		} else {
+			$gameInfo['media'][$i['infoID']] = $i;
+		}
+
 	}
 
 	$gameInfo['tags'] = getGameTags($gameID);
@@ -353,7 +372,7 @@ function isPasswordCorrect($userID, $passwordInput){
 
 		$passwordCorrect = false;
 	}
-	
+
 	return ($passwordCorrect);
 }
 
@@ -364,6 +383,75 @@ function getInfoMetaTypes(){
 	$sql = "SELECT infoMetaID, infoMetaName, infoMetaDescription
 			FROM infoMeta";
 	return ((array)mysqlQuery($sql, ASSOC));
+}
+
+/******************************************************************************/
+
+function getNewsfeedInfo($numInFeed){
+
+	$numInFeed = (int)$numInFeed;
+
+	$sql = "SELECT gameID, gameName, userID, gameDatestamp
+			FROM gameList
+			ORDER BY gameDatestamp DESC
+			LIMIT {$numInFeed}";
+	$recent['games'] = (array)mysqlQuery($sql, ASSOC);
+
+	$sql = "SELECT gameID, gameName, iL.userID, infoDate
+			FROM infoList AS iL
+			INNER JOIN gameList USING(gameID)
+			WHERE gameDatestamp != infoDate
+			ORDER BY infoDate DESC
+			LIMIT {$numInFeed}";
+	$recent['info'] = (array)mysqlQuery($sql, ASSOC);
+
+	return ($recent);
+}
+
+/******************************************************************************/
+
+function getGameCreationHistory(){
+	$sql = "SELECT gameID, gameName, userID, gameDatestamp
+			FROM gameList
+			ORDER BY gameDatestamp DESC";
+	$history = (array)mysqlQuery($sql, ASSOC);
+	return ($history);
+}
+
+/******************************************************************************/
+
+function getInfoCreationHistory(){
+	$sql = "SELECT gameID, gameName, iL.userID, infoDate
+			FROM infoList AS iL
+			INNER JOIN gameList USING(gameID)
+			WHERE gameDatestamp != infoDate
+			ORDER BY infoDate DESC";
+	$history = (array)mysqlQuery($sql, ASSOC);
+	return ($history);
+}
+
+/******************************************************************************/
+
+function getArchiveStats(){
+
+	$sql = "SELECT COUNT(*) AS numGames
+			FROM gameList";
+	$stats['numGames'] = (int)mysqlQuery($sql, SINGLE, 'numGames');
+
+	$sql = "SELECT COUNT(DISTINCT userID) AS numAuthors
+			FROM gameList";
+	$stats['numAuthors'] = (int)mysqlQuery($sql, SINGLE, 'numAuthors');
+
+	$sql = "SELECT COUNT(*) AS numTagTypes
+			FROM  tagList";
+	$stats['numTagTypes'] = (int)mysqlQuery($sql, SINGLE, 'numTagTypes');
+
+	$sql = "SELECT COUNT(*) AS numTagsAttached
+			FROM gameTag";
+	$stats['numTagsAttached'] = (int)mysqlQuery($sql, SINGLE, 'numTagsAttached');
+
+	return($stats);
+
 }
 
 /******************************************************************************/
