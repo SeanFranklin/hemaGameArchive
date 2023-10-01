@@ -1,29 +1,43 @@
 <?php
 /*******************************************************************************
 	Configuration File
-	
+
 	Defines constants
 	Includes function libraries
 	Connects to database
 	Establishes proper session values
 	Runs the POST processing function
-	
+
 *******************************************************************************/
 
 // Initialize Session //////////////////////////////////////////////////////////
 
+	// ini_set('display_errors', 1);
+	// ini_set('display_startup_errors', 1);
+	// error_reporting(E_ALL);
+
 	initializeSession();
 
 // System Constants ////////////////////////////////////////////////////////////
-	
+
 	define("DEBUGGING", 0);
 	date_default_timezone_set("UTC");
+
+	define("DEPLOYMENT_UNKNOWN",0);
+	define("DEPLOYMENT_PRODUCTION",1);
+	define("DEPLOYMENT_TEST",2);
+	define("DEPLOYMENT_LOCAL",3);
 
 // Database Connection
 	if(!defined('BASE_URL')){
 		define('BASE_URL' , $_SERVER['DOCUMENT_ROOT'].'/hga/');
 	}
 	include(BASE_URL.'includes/database.php');
+
+	if(!defined('DEPLOYMENT')){
+		define('DEPLOYMENT' , DEPLOYMENT_UNKNOWN);
+	}
+
 
 // Program Related Constants
 
@@ -60,6 +74,7 @@
 	define("INFO_META_RULES",1);
 	define("INFO_META_DESIGN",2);
 	define("INFO_META_NOTES",3);
+	define("INFO_META_MEDIA",4);
 
 // Includes ////////////////////////////////////////////////////////////////////
 
@@ -77,19 +92,18 @@ $conn = connectToDB();
 // Process POST Data ///////////////////////////////////////////////////////////
 
 	processUrlParams();
-	processPostData(); 
+	processPostData();
 
 // Define Constants Based on DB ////////////////////////////////////////////////
 
 	$sql = "SELECT tagMetaID, tagColor
 			FROM tagMeta";
 	$colorList = mysqlQuery($sql, ASSOC);
-	echo "<style>";	
+
+	echo "<style>";
 		foreach($colorList as $c){
-		?>
-		.tag-color-<?=$c['tagMetaID']?> { color: <?=$c['tagColor']?>;}
-		<?
-	}
+			echo ".tag-color-{$c['tagMetaID']} { color: {$c['tagColor']} }";
+		}
 
 	echo "</style>";
 
@@ -124,7 +138,7 @@ function setPermissions(){
 /******************************************************************************/
 
 function initializeSession(){
-// Starts the session and initializes any session variables 
+// Starts the session and initializes any session variables
 // that are not set to null values.
 
 	session_start();
@@ -138,14 +152,14 @@ function initializeSession(){
 		$_SESSION['alertMessages']['userErrors'] = [];
 		$_SESSION['alertMessages']['userWarnings'] = [];
 		$_SESSION['alertMessages']['userAlerts'] = [];
-		
+
 		$_SESSION['init'] = TRUE;
 	}
 
 }
 
-/******************************************************************************/	
-	
+/******************************************************************************/
+
 
 // END OF FILE /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
